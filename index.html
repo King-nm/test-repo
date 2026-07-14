@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Holloway Connect staffs municipalities, schools, and youth organizations with qualified high school and college coaches and mentors.">
+  <title>Holloway Connect — Youth Coaching Workforce Partner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========== Tokens ========== */
+    :root {
+      --ink: #0B1A2C;
+      --ink-soft: #1A2F48;
+      --surface: #FFFFFF;
+      --surface-raised: #F4F7FB;
+      --surface-hover: #EBF0F7;
+      --border: rgba(11, 26, 44, 0.10);
+      --border-strong: rgba(11, 26, 44, 0.16);
+      --brass: #A8843A;
+      --brass-bright: #C6A15B;
+      --brass-soft: rgba(168, 132, 58, 0.12);
+      --text: #0B1A2C;
+      --text-muted: #5A6B82;
+      --text-faint: #8594A8;
+      --sage: #3E7A62;
+      --sage-soft: rgba(62, 122, 98, 0.12);
+      --danger: #B54A3F;
+      --danger-soft: rgba(181, 74, 63, 0.10);
+      --shadow-sm: 0 1px 2px rgba(11, 26, 44, 0.04);
+      --shadow: 0 24px 60px -28px rgba(11, 26, 44, 0.28), 0 8px 20px -12px rgba(11, 26, 44, 0.12);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --font-display: "Fraunces", Georgia, serif;
+      --font-body: "Manrope", system-ui, sans-serif;
+      --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+      --status-new: #3B6EA5;
+      --status-contacted: #8A6D3B;
+      --status-proposal: #6B5B95;
+      --status-signed: #3E7A62;
+    }
+
+    /* ========== Reset ========== */
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-body);
+      color: var(--text);
+      background:
+        radial-gradient(900px 480px at 8% -5%, rgba(168, 132, 58, 0.09), transparent 55%),
+        radial-gradient(700px 420px at 100% 100%, rgba(62, 122, 98, 0.06), transparent 50%),
+        linear-gradient(165deg, #E8EEF5 0%, #F0F3F7 45%, #E6ECF3 100%);
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+    }
+    button, input, select, textarea { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    a { color: var(--ink-soft); }
+    h1, h2, h3, p { margin: 0; }
+    :focus-visible {
+      outline: 2px solid var(--brass);
+      outline-offset: 2px;
+    }
+
+    /* ========== Layout ========== */
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px 64px;
+    }
+    .stage {
+      width: 100%;
+      max-width: 620px;
+      position: relative;
+    }
+
+    /* ========== Shell ========== */
+    .shell {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .shell::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 5%, var(--brass-bright) 50%, transparent 95%);
+      pointer-events: none;
+    }
+
+    .brandbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 28px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #FAFBFD 0%, var(--surface) 100%);
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+    }
+    .seal {
+      width: 40px;
+      height: 40px;
+      flex: none;
+    }
+    .wordmark {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.01em;
+      color: var(--ink);
+      line-height: 1.2;
+    }
+    .wordmark span {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      color: var(--brass);
+      margin-top: 3px;
+      text-transform: uppercase;
+    }
+
+    .progress {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex: none;
+    }
+    .progress-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: rgba(90, 107, 130, 0.28);
+      transition: width 0.35s var(--ease), background 0.35s var(--ease), border-radius 0.35s var(--ease);
+    }
+    .progress-dot.is-done { background: var(--brass); }
+    .progress-dot.is-now {
+      width: 18px;
+      border-radius: 4px;
+      background: var(--brass-bright);
+    }
+
+    /* ========== Panels ========== */
+    .panels { position: relative; }
+    .panel {
+      display: none;
+      padding: 36px 32px 32px;
+    }
+    .panel.is-active {
+      display: block;
+      animation: panelIn 0.45s var(--ease);
+    }
+    @keyframes panelIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brass);
+      margin-bottom: 14px;
+    }
+    .panel h1 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(1.45rem, 4vw, 1.75rem);
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+    .panel h2 {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: clamp(1.2rem, 3.2vw, 1.4rem);
+      line-height: 1.3;
+      letter-spacing: -0.015em;
+      margin-bottom: 8px;
+    }
+    .panel-sub {
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      line-height: 1.65;
+      margin-bottom: 24px;
+    }
+    .cite {
+      font-size: 0.875rem;
+      color: var(--text-muted);
+      border-left: 2px solid var(--brass);
+      padding: 2px 0 2px 14px;
+      margin: 0 0 22px;
+      line-height: 1.6;
+    }
+    .cite strong {
+      color: var(--brass);
+      font-family: var(--font-mono);
+      font-weight: 500;
+      font-size: 0.8125rem;
+    }
+
+    /* ========== Controls ========== */
+    .btn {
+      appearance: none;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 14px 22px;
+      border-radius: var(--radius-sm);
+      background: var(--ink);
+      color: #F7F3EA;
+      font-weight: 600;
+      font-size: 0.9375rem;
+      letter-spacing: 0.01em;
+      transition: background 0.2s ease, transform 0.15s ease, box-shadow 0.2s ease;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn:hover:not(:disabled) {
+      background: var(--ink-soft);
+      transform: translateY(-1px);
+    }
+    .btn:active:not(:disabled) { transform: translateY(0); }
+    .btn:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+    .btn-accent {
+      background: var(--brass);
+      color: #1A1305;
+    }
+    .btn-accent:hover:not(:disabled) {
+      background: var(--brass-bright);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--text-muted);
+      border: 1px solid var(--border-strong);
+      box-shadow: none;
+      font-weight: 500;
+      font-size: 0.8125rem;
+      padding: 11px 16px;
+      margin-top: 10px;
+    }
+    .btn-ghost:hover:not(:disabled) {
+      background: var(--surface-raised);
+      color: var(--text);
+      transform: none;
+    }
+    .btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .btn-row .btn {
+      width: auto;
+      flex: 1;
+      min-width: 120px;
+    }
+
+    .option-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      width: 100%;
+      text-align: left;
+      padding: 15px 16px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface-raised);
+      color: var(--text);
+      font-size: 0.9375rem;
+      font-weight: 500;
+      transition: border-color 0.18s ease, background 0.18s ease, transform 0.18s var(--ease);
+    }
+    .option:hover {
+      border-color: var(--brass);
+      background: var(--surface-hover);
+      transform: translateX(3px);
+    }
+    .option:focus-visible {
+      outline-offset: 0;
+    }
+    .option-mark {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      border: 1.5px solid var(--brass);
+      flex: none;
+      display: grid;
+      place-items: center;
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      font-weight: 600;
+      color: var(--brass);
+      background: var(--surface);
+    }
+
+    /* ========== Assessment ========== */
+    .assessment {
+      display: grid;
+      gap: 22px;
+      margin: 8px 0 28px;
+    }
+    .priority-meter {
+      background: var(--surface-raised);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px 20px 20px;
+    }
+    .priority-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .priority-label {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+    }
+    .priority-level {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.125rem;
+      color: var(--ink);
+    }
+    .meter-track {
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(11, 26, 44, 0.08);
+      overflow: hidden;
+    }
+    .meter-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--brass), var(--brass-bright));
+      transition: width 0.9s var(--ease);
+    }
+    .priority-desc {
+      color: var(--text-muted);
+      font-size: 0.9375rem;
+      line-height: 1.65;
+    }
+    .priority-meta {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .meta-chip {
+      background: var(--surface-raised);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 14px;
+    }
+    .meta-chip dt {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-faint);
+      margin-bottom: 4px;
+    }
+    .meta-chip dd {
+      margin: 0;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* ========== Form ========== */
+    .lead-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-top: 18px;
+    }
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .field-span {
+      grid-column: 1 / -1;
+    }
+    .field label {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      letter-spacing: 0.06em;
+      color: var(--text-muted);
+    }
+    .field input,
+    .field select,
+    .field textarea {
+      width: 100%;
+      padding: 12px 13px;
+      border-radius: 9px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface-raised);
+      font-size: 0.9375rem;
+      transition: border-color 0.15s ease, background 0.15s ease;
+    }
+    .field textarea {
+      min-height: 72px;
+      resize: vertical;
+      line-height: 1.45;
+    }
+    .field input:hover,
+    .field select:hover,
+    .field textarea:hover {
+      border-color: rgba(11, 26, 44, 0.22);
+    }
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus {
+      outline: 2px solid var(--brass);
+      outline-offset: 1px;
+      border-color: transparent;
+      background: var(--surface);
+    }
+    .consent {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+      margin-top: 4px;
+    }
+    .consent input {
+      margin-top: 3px;
+      accent-color: var(--brass);
+      width: auto;
+      flex: none;
+    }
+    .consent span {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+    }
+    .form-error {
+      color: var(--danger);
+      font-size: 0.8125rem;
+      min-height: 1.1em;
+      margin: 0;
+    }
+    .fine-print {
+      font-size: 0.6875rem;
+      color: var(--text-faint);
+      line-height: 1.55;
+      margin-top: 4px;
+    }
+
+    /* ========== Thank you ========== */
+    .thankyou {
+      text-align: center;
+      padding-top: 6px;
+    }
+    .stamp-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .stamp {
+      width: 92px;
+      height: 92px;
+      animation: stampIn 0.55s cubic-bezier(0.2, 1.4, 0.4, 1);
+    }
+    @keyframes stampIn {
+      from { transform: scale(1.8) rotate(-12deg); opacity: 0; }
+      to { transform: scale(1) rotate(-6deg); opacity: 1; }
+    }
+    .thankyou h2 { margin-bottom: 10px; }
+    .thankyou .panel-sub { margin-bottom: 8px; }
+    .thankyou .btn-ghost {
+      max-width: 240px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* ========== Admin gate ========== */
+    .pin-input {
+      width: 100%;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      letter-spacing: 0.6em;
+      padding: 14px 0 14px 0.6em;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-strong);
+      background: var(--surface-raised);
+      margin: 18px 0 8px;
+    }
+
+    /* ========== CRM ========== */
+    .crm-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .crm-count {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+    }
+    .crm-identity {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--brass);
+      margin-bottom: 18px;
+    }
+    .crm-toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+    .filter-chip {
+      appearance: none;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 7px 10px;
+      border-radius: 999px;
+      transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+    }
+    .filter-chip:hover {
+      border-color: var(--brass);
+      color: var(--ink);
+    }
+    .filter-chip.is-active {
+      background: var(--ink);
+      border-color: var(--ink);
+      color: #F7F3EA;
+    }
+    .lead-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 16px;
+      max-height: min(58vh, 520px);
+      overflow: auto;
+      padding-right: 2px;
+    }
+    .lead {
+      background: var(--surface-raised);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px 16px 14px;
+    }
+    .lead-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .lead-org {
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 1.05rem;
+      line-height: 1.25;
+    }
+    .status-badge {
+      flex: none;
+      font-family: var(--font-mono);
+      font-size: 0.5625rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      border-radius: 5px;
+      border: 1px solid transparent;
+    }
+    .status-new { color: var(--status-new); background: rgba(59, 110, 165, 0.12); border-color: rgba(59, 110, 165, 0.22); }
+    .status-contacted { color: var(--status-contacted); background: rgba(138, 109, 59, 0.12); border-color: rgba(138, 109, 59, 0.22); }
+    .status-proposal { color: var(--status-proposal); background: rgba(107, 91, 149, 0.12); border-color: rgba(107, 91, 149, 0.22); }
+    .status-signed { color: var(--status-signed); background: var(--sage-soft); border-color: rgba(62, 122, 98, 0.25); }
+    .lead-tag {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--brass);
+      background: var(--brass-soft);
+      border: 1px solid rgba(168, 132, 58, 0.22);
+      border-radius: 5px;
+      padding: 2px 7px;
+      margin-bottom: 10px;
+    }
+    .lead-rows {
+      display: grid;
+      gap: 3px;
+      font-size: 0.8125rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      margin-bottom: 12px;
+    }
+    .lead-rows a {
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px dotted var(--text-faint);
+    }
+    .lead-rows a:hover { border-bottom-style: solid; }
+    .lead-footer {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding-top: 10px;
+      border-top: 1px solid var(--border);
+    }
+    .lead-meta {
+      font-family: var(--font-mono);
+      font-size: 0.625rem;
+      color: var(--text-faint);
+    }
+    .status-select {
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      padding: 7px 10px;
+      border-radius: 8px;
+      border: 1px solid var(--border-strong);
+      background: var(--surface);
+      min-width: 150px;
+    }
+    .empty-state,
+    .loading-state {
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      padding: 36px 12px;
+    }
+    .loading-state {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+    }
+
+    .admin-link {
+      position: absolute;
+      bottom: -34px;
+      right: 2px;
+      font-family: var(--font-mono);
+      font-size: 0.6875rem;
+      color: var(--text-faint);
+      text-decoration: none;
+      letter-spacing: 0.04em;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .admin-link:hover { color: var(--brass); }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* ========== Responsive ========== */
+    @media (max-width: 520px) {
+      .page { padding: 24px 14px 56px; }
+      .brandbar { padding: 16px 18px; }
+      .panel { padding: 26px 18px 22px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .priority-meta { grid-template-columns: 1fr; }
+      .lead-top { flex-direction: column; align-items: flex-start; }
+      .crm-toolbar .btn { flex: 1 1 100%; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .panel.is-active,
+      .stamp,
+      .progress-dot,
+      .meter-fill,
+      .option,
+      .btn {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <div class="stage">
+      <main class="shell" id="app" aria-live="polite">
+        <header class="brandbar">
+          <div class="brand">
+            <svg class="seal" viewBox="0 0 100 100" role="img" aria-label="Holloway Connect seal">
+              <defs>
+                <path id="sealArc" d="M 50 50 m -38 0 a 38 38 0 1 1 76 0 a 38 38 0 1 1 -76 0"/>
+              </defs>
+              <circle cx="50" cy="50" r="46" fill="none" stroke="#A8843A" stroke-width="1.4" opacity="0.55"/>
+              <circle cx="50" cy="50" r="38" fill="none" stroke="#A8843A" stroke-width="1" opacity="0.35"/>
+              <text font-family="IBM Plex Mono, monospace" font-size="7" fill="#A8843A" letter-spacing="2.2">
+                <textPath href="#sealArc" startOffset="2">HOLLOWAY · CONNECT ·</textPath>
+              </text>
+              <text x="50" y="55" text-anchor="middle" font-family="Fraunces, serif" font-size="24" font-weight="600" fill="#0B1A2C">H</text>
+            </svg>
+            <div class="wordmark">
+              Holloway Connect
+              <span>Workforce &amp; Coaching Partner</span>
+            </div>
+          </div>
+          <div class="progress" id="progress" role="navigation" aria-label="Assessment progress">
+            <span class="progress-dot" data-step="1" aria-hidden="true"></span>
+            <span class="progress-dot" data-step="2" aria-hidden="true"></span>
+            <span class="progress-dot" data-step="3" aria-hidden="true"></span>
+          </div>
+        </header>
+
+        <div class="panels">
+          <!-- LANDING -->
+          <section class="panel is-active" data-panel="landing" aria-labelledby="landing-title">
+            <p class="eyebrow">For municipalities, schools &amp; youth programs</p>
+            <h1 id="landing-title" tabindex="-1">Staffing shortages are leaving youth programs short of qualified coaches.</h1>
+            <p class="cite">
+              Most communities report too few trained coaches for the demand — and program leaders say the gap is getting harder to fill locally.
+              <br>— Aspen Institute, Project Play, <strong>State of Play 2024</strong>
+            </p>
+            <p class="panel-sub">
+              Holloway Connect places screened high school and college coaches with parks &amp; recreation departments, school districts, nonprofits, churches, and athletic leagues — on contract, for the season, or as ongoing program support.
+            </p>
+            <button type="button" class="btn btn-accent" data-go="q1">
+              Assess your staffing needs
+              <span aria-hidden="true">→</span>
+            </button>
+          </section>
+
+          <!-- Q1 -->
+          <section class="panel" data-panel="q1" aria-labelledby="q1-title" hidden>
+            <p class="eyebrow">Step 1 of 3</p>
+            <h2 id="q1-title" tabindex="-1">What type of organization needs staffing support?</h2>
+            <p class="panel-sub">This helps us match you with the right coaching and mentorship capacity.</p>
+            <div class="option-list" id="q1-options" role="group" aria-labelledby="q1-title"></div>
+          </section>
+
+          <!-- Q2 -->
+          <section class="panel" data-panel="q2" aria-labelledby="q2-heading" hidden>
+            <p class="eyebrow">Step 2 of 3</p>
+            <h2 id="q2-heading" tabindex="-1"></h2>
+            <p class="panel-sub" id="q2-sub">Select the option that best reflects your current capacity gap.</p>
+            <div class="option-list" id="q2-options" role="group" aria-labelledby="q2-heading"></div>
+          </section>
+
+          <!-- Q3 -->
+          <section class="panel" data-panel="q3" aria-labelledby="q3-title" hidden>
+            <p class="eyebrow">Step 3 of 3</p>
+            <h2 id="q3-title" tabindex="-1">How urgently do you need coaches in place?</h2>
+            <p class="panel-sub">Timeline determines whether we prioritize immediate placement or pipeline planning.</p>
+            <div class="option-list" id="q3-options" role="group" aria-labelledby="q3-title"></div>
+          </section>
+
+          <!-- RESULTS -->
+          <section class="panel" data-panel="results" aria-labelledby="results-title" hidden>
+            <p class="eyebrow">Staffing assessment</p>
+            <h2 id="results-title" class="sr-only">Your staffing priority assessment</h2>
+            <div class="assessment">
+              <div class="priority-meter">
+                <div class="priority-header">
+                  <span class="priority-label">Staffing priority</span>
+                  <span class="priority-level" id="tierTitle">—</span>
+                </div>
+                <div class="meter-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="priorityBar" aria-labelledby="tierTitle">
+                  <div class="meter-fill" id="meterFill"></div>
+                </div>
+              </div>
+              <p class="priority-desc" id="tierDesc"></p>
+              <dl class="priority-meta">
+                <div class="meta-chip">
+                  <dt>Primary need</dt>
+                  <dd id="metaNeed">—</dd>
+                </div>
+                <div class="meta-chip">
+                  <dt>Recommended path</dt>
+                  <dd id="metaPath">—</dd>
+                </div>
+              </dl>
+            </div>
+            <button type="button" class="btn btn-accent" data-go="form">
+              Request staffing support
+              <span aria-hidden="true">→</span>
+            </button>
+            <button type="button" class="btn btn-ghost" data-go="landing">Start over</button>
+          </section>
+
+          <!-- FORM -->
+          <section class="panel" data-panel="form" aria-labelledby="form-title" hidden>
+            <p class="eyebrow">Request staffing support</p>
+            <h2 id="form-title" tabindex="-1">Tell us who to contact and what you need filled.</h2>
+            <p class="panel-sub">We use this to scope a coaching placement or contract proposal — typically within a few business days.</p>
+            <form class="lead-form" id="leadForm" novalidate>
+              <div class="field field-span">
+                <label for="orgName">Organization / municipality</label>
+                <input type="text" id="orgName" name="orgName" required autocomplete="organization" placeholder="City of ___ Parks &amp; Recreation">
+              </div>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="contactName">Contact name</label>
+                  <input type="text" id="contactName" name="contactName" required autocomplete="name" placeholder="Jane Doe">
+                </div>
+                <div class="field">
+                  <label for="role">Role / title</label>
+                  <input type="text" id="role" name="role" required autocomplete="organization-title" placeholder="Recreation Director">
+                </div>
+                <div class="field">
+                  <label for="email">Work email</label>
+                  <input type="email" id="email" name="email" required autocomplete="email" placeholder="jane@cityname.gov">
+                </div>
+                <div class="field">
+                  <label for="phone">Phone</label>
+                  <input type="tel" id="phone" name="phone" required autocomplete="tel" placeholder="(555) 555-5555">
+                </div>
+              </div>
+              <div class="field field-span">
+                <label for="city">City / region</label>
+                <input type="text" id="city" name="city" required autocomplete="address-level2" placeholder="Fort Worth, TX">
+              </div>
+              <div class="field-grid">
+                <div class="field">
+                  <label for="coachesNeeded">Number of coaches needed</label>
+                  <input type="number" id="coachesNeeded" name="coachesNeeded" required min="1" max="500" inputmode="numeric" placeholder="e.g. 4">
+                </div>
+                <div class="field">
+                  <label for="startDate">Preferred start date</label>
+                  <input type="date" id="startDate" name="startDate" required>
+                </div>
+              </div>
+              <div class="field field-span">
+                <label for="sportsPrograms">Sports / programs needing coaches</label>
+                <textarea id="sportsPrograms" name="sportsPrograms" required placeholder="e.g. Middle school basketball, after-school soccer, summer mentorship"></textarea>
+              </div>
+              <div class="consent">
+                <input type="checkbox" id="consent" name="consent" required>
+                <span>I authorize Holloway Connect to contact me about coaching staffing, placement, or contract program support for our organization.</span>
+              </div>
+              <p class="form-error" id="formError" role="alert" aria-live="assertive"></p>
+              <button class="btn btn-accent" type="submit" id="submitBtn">Submit staffing request</button>
+              <p class="fine-print">Submissions are saved to the Holloway Connect server and can trigger email alerts when SMTP is configured.</p>
+            </form>
+          </section>
+
+          <!-- THANK YOU -->
+          <section class="panel" data-panel="thankyou" aria-labelledby="thanks-title" hidden>
+            <div class="thankyou">
+              <div class="stamp-wrap" aria-hidden="true">
+                <svg class="stamp" viewBox="0 0 100 100">
+                  <circle cx="50" cy="50" r="44" fill="none" stroke="#3E7A62" stroke-width="3"/>
+                  <circle cx="50" cy="50" r="36" fill="none" stroke="#3E7A62" stroke-width="1"/>
+                  <text x="50" y="46" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="11" font-weight="600" fill="#3E7A62" letter-spacing="1">RECEIVED</text>
+                  <text x="50" y="62" text-anchor="middle" font-family="IBM Plex Mono, monospace" font-size="6.5" fill="#3E7A62" letter-spacing="0.5">HOLLOWAY CONNECT</text>
+                </svg>
+              </div>
+              <h2 id="thanks-title">Your staffing request is on file.</h2>
+              <p class="panel-sub">A Holloway Connect coordinator will review your need and follow up with next steps for placement or a contract proposal.</p>
+              <button type="button" class="btn btn-ghost" data-go="landing">Submit another request</button>
+            </div>
+          </section>
+
+          <!-- ADMIN GATE -->
+          <section class="panel" data-panel="gate" aria-labelledby="gate-title" hidden>
+            <p class="eyebrow">Admin access</p>
+            <h2 id="gate-title">Enter your admin code</h2>
+            <p class="panel-sub">Opens the local lead CRM for this browser.</p>
+            <label class="sr-only" for="pinInput">Four-digit admin code</label>
+            <input type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" id="pinInput" class="pin-input" placeholder="····" autocomplete="one-time-code" aria-describedby="pinError">
+            <p class="form-error" id="pinError" role="alert"></p>
+            <button type="button" class="btn" id="unlockBtn">Unlock CRM</button>
+            <button type="button" class="btn btn-ghost" data-go="landing">Back to site</button>
+          </section>
+
+          <!-- ADMIN CRM -->
+          <section class="panel" data-panel="admin" aria-labelledby="admin-title" hidden>
+            <div class="crm-head">
+              <p class="eyebrow" id="admin-title" style="margin-bottom:0;">Lead CRM</p>
+              <span class="crm-count" id="adminCount"></span>
+            </div>
+            <div class="crm-identity">Signed in as Kingholloway01@gmail.com</div>
+            <div class="crm-toolbar" role="toolbar" aria-label="CRM filters and actions">
+              <button type="button" class="filter-chip is-active" data-filter="all">All</button>
+              <button type="button" class="filter-chip" data-filter="new">New Lead</button>
+              <button type="button" class="filter-chip" data-filter="contacted">Contacted</button>
+              <button type="button" class="filter-chip" data-filter="proposal">Proposal Sent</button>
+              <button type="button" class="filter-chip" data-filter="signed">Contract Signed</button>
+            </div>
+            <div class="btn-row" style="margin-bottom:16px;">
+              <button type="button" class="btn btn-ghost" id="refreshCrm" style="margin-top:0;">Refresh</button>
+              <button type="button" class="btn btn-ghost" id="copyCsv" style="margin-top:0;">Copy as CSV</button>
+            </div>
+            <div class="lead-list" id="adminList" aria-live="polite"></div>
+            <button type="button" class="btn btn-ghost" data-go="landing">Exit CRM</button>
+          </section>
+        </div>
+      </main>
+
+      <button type="button" class="admin-link" data-go="gate">Admin</button>
+    </div>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      /* ========== Config & state ========== */
+      const STORAGE_KEY = "holloway-connect-leads-v2";
+      const ADMIN_CODE = "0222";
+      const STATUS = {
+        new: { id: "new", label: "New Lead", className: "status-new" },
+        contacted: { id: "contacted", label: "Contacted", className: "status-contacted" },
+        proposal: { id: "proposal", label: "Proposal Sent", className: "status-proposal" },
+        signed: { id: "signed", label: "Contract Signed", className: "status-signed" },
+      };
+
+      const state = {
+        q1: null,
+        q2: null,
+        q3: null,
+        priority: 0,
+        tierTitle: "",
+        tierDesc: "",
+        recommendedPath: "",
+        filter: "all",
+      };
+
+      let lastLeads = [];
+
+      const Q1_OPTIONS = [
+        { v: "parks", label: "Parks & Recreation / Municipality" },
+        { v: "school", label: "School or School District" },
+        { v: "nonprofit", label: "Nonprofit or Community Organization" },
+        { v: "church", label: "Church or Faith-Based Program" },
+        { v: "league", label: "Athletic League or Club" },
+      ];
+
+      const Q2_BY_BRANCH = {
+        parks: {
+          heading: "Where are coaching shortages hitting hardest?",
+          options: [
+            { v: "p1", label: "Youth (ages 5–9)", pts: 2 },
+            { v: "p2", label: "Middle grades (ages 10–13)", pts: 3 },
+            { v: "p3", label: "Teens (ages 14–18)", pts: 3 },
+            { v: "p4", label: "Multiple age groups across programs", pts: 4 },
+          ],
+        },
+        school: {
+          heading: "How many coaching roles are unfilled this school year?",
+          options: [
+            { v: "s1", label: "Several positions still open", pts: 4 },
+            { v: "s2", label: "One or two openings", pts: 3 },
+            { v: "s3", label: "Covered for now, gaps expected soon", pts: 2 },
+            { v: "s4", label: "Still assessing staffing needs", pts: 1 },
+          ],
+        },
+        nonprofit: {
+          heading: "What is the biggest barrier to running programs right now?",
+          options: [
+            { v: "n1", label: "Not enough qualified coaches or mentors", pts: 4 },
+            { v: "n2", label: "Budget limits for paid staffing", pts: 3 },
+            { v: "n3", label: "Facility or scheduling constraints", pts: 2 },
+            { v: "n4", label: "Volunteer burnout / attrition", pts: 3 },
+          ],
+        },
+        church: {
+          heading: "What support does your youth ministry or recreation program need most?",
+          options: [
+            { v: "c1", label: "Consistent coaches for weekly activities", pts: 4 },
+            { v: "c2", label: "Seasonal or camp staffing", pts: 3 },
+            { v: "c3", label: "Mentors for teens and young adults", pts: 3 },
+            { v: "c4", label: "Exploring options for next term", pts: 1 },
+          ],
+        },
+        league: {
+          heading: "How many teams are currently short a coach?",
+          options: [
+            { v: "l1", label: "1–2 teams", pts: 2 },
+            { v: "l2", label: "3–5 teams", pts: 3 },
+            { v: "l3", label: "More than 5 teams", pts: 4 },
+            { v: "l4", label: "None yet — planning next season", pts: 1 },
+          ],
+        },
+      };
+
+      const Q3_OPTIONS = [
+        { v: "now", label: "Immediate — this season or this month", pts: 4 },
+        { v: "soon", label: "Within the next 1–3 months", pts: 3 },
+        { v: "next", label: "Next season / academic term", pts: 2 },
+        { v: "exploring", label: "Exploring capacity options for later", pts: 1 },
+      ];
+
+      /* ========== DOM helpers ========== */
+      const $ = (sel, root = document) => root.querySelector(sel);
+      const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+
+      function escapeHtml(str) {
+        return String(str ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;");
+      }
+
+      function escapeAttr(str) {
+        return escapeHtml(str).replace(/'/g, "&#39;");
+      }
+
+      function formatDate(iso) {
+        if (!iso) return "";
+        try {
+          return new Date(iso).toLocaleString();
+        } catch {
+          return iso;
+        }
+      }
+
+      function formatShortDate(isoDate) {
+        if (!isoDate) return "—";
+        try {
+          const d = new Date(isoDate + "T12:00:00");
+          return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
+        } catch {
+          return isoDate;
+        }
+      }
+
+      /* ========== API ========== */
+      const API_BASE = "/api";
+      let adminToken = sessionStorage.getItem("hc_admin_token") || null;
+
+      function markApiUnavailable(err) {
+        err.apiUnavailable = true;
+        return err;
+      }
+
+      function isApiUnavailable(err) {
+        return !!err?.apiUnavailable;
+      }
+
+      async function apiFetch(path, options = {}) {
+        const headers = { "Content-Type": "application/json", ...(options.headers || {}) };
+        if (adminToken) headers.Authorization = `Bearer ${adminToken}`;
+        let res;
+        try {
+          res = await fetch(`${API_BASE}${path}`, { ...options, headers });
+        } catch (err) {
+          throw markApiUnavailable(err instanceof Error ? err : new Error("API unavailable"));
+        }
+        if ([404, 405, 501].includes(res.status)) {
+          throw markApiUnavailable(new Error("API unavailable"));
+        }
+        if (!res.ok) {
+          let detail = res.statusText;
+          try {
+            const body = await res.json();
+            detail = body.detail || detail;
+          } catch { /* ignore */ }
+          throw new Error(typeof detail === "string" ? detail : "Request failed");
+        }
+        if (res.status === 204) return null;
+        return res.json();
+      }
+
+      function readLocalLeads() {
+        try {
+          const raw = localStorage.getItem(STORAGE_KEY);
+          const leads = raw ? JSON.parse(raw) : [];
+          return Array.isArray(leads) ? leads : [];
+        } catch {
+          return [];
+        }
+      }
+
+      function writeLocalLeads(leads) {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(leads));
+      }
+
+      function createLeadId() {
+        if (window.crypto?.randomUUID) return window.crypto.randomUUID();
+        return `lead-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+      }
+
+      async function loadLeads() {
+        if (!adminToken) return [];
+        try {
+          return await apiFetch("/leads");
+        } catch (err) {
+          if (!isApiUnavailable(err)) throw err;
+          return readLocalLeads();
+        }
+      }
+
+      async function saveLead(payload) {
+        try {
+          const data = await apiFetch("/leads", {
+            method: "POST",
+            body: JSON.stringify(payload),
+          });
+          return !!data?.ok;
+        } catch (err) {
+          if (!isApiUnavailable(err)) throw err;
+          const leads = readLocalLeads();
+          leads.unshift({
+            id: createLeadId(),
+            status: "new",
+            submittedAt: new Date().toISOString(),
+            ...payload,
+          });
+          writeLocalLeads(leads);
+          return true;
+        }
+      }
+
+      async function updateLeadStatus(id, statusId) {
+        try {
+          await apiFetch(`/leads/${encodeURIComponent(id)}`, {
+            method: "PATCH",
+            body: JSON.stringify({ status: statusId }),
+          });
+          return true;
+        } catch (err) {
+          if (!isApiUnavailable(err)) throw err;
+          const leads = readLocalLeads();
+          const lead = leads.find((item) => item.id === id);
+          if (!lead) throw new Error("Lead not found.");
+          lead.status = STATUS[statusId] ? statusId : "new";
+          writeLocalLeads(leads);
+          return true;
+        }
+      }
+
+      /* ========== UI: options & navigation ========== */
+      function renderOptions(containerId, options, onPick) {
+        const el = document.getElementById(containerId);
+        el.replaceChildren();
+        options.forEach((opt, i) => {
+          const btn = document.createElement("button");
+          btn.type = "button";
+          btn.className = "option";
+          btn.innerHTML = `<span class="option-mark" aria-hidden="true">${String.fromCharCode(65 + i)}</span><span>${escapeHtml(opt.label)}</span>`;
+          btn.addEventListener("click", () => onPick(opt));
+          el.appendChild(btn);
+        });
+      }
+
+      function setProgress(n) {
+        $$(".progress-dot").forEach((dot) => {
+          const step = Number(dot.dataset.step);
+          dot.classList.toggle("is-done", step < n);
+          dot.classList.toggle("is-now", step === n);
+        });
+      }
+
+      function goTo(panel) {
+        $$(".panel").forEach((p) => {
+          const active = p.dataset.panel === panel;
+          p.classList.toggle("is-active", active);
+          if (active) p.removeAttribute("hidden");
+          else p.setAttribute("hidden", "");
+        });
+
+        const stepMap = { q1: 1, q2: 2, q3: 3 };
+        setProgress(stepMap[panel] || 0);
+
+        if (panel === "q1") renderOptions("q1-options", Q1_OPTIONS, pickQ1);
+        if (panel === "q3") renderOptions("q3-options", Q3_OPTIONS, pickQ3);
+
+        if (panel === "landing") {
+          state.q1 = null;
+          state.q2 = null;
+          state.q3 = null;
+          state.priority = 0;
+        }
+
+        if (panel === "gate") {
+          const pin = $("#pinInput");
+          pin.value = "";
+          $("#pinError").textContent = "";
+          requestAnimationFrame(() => pin.focus());
+        }
+
+        if (panel === "admin") renderCrm();
+        if (panel === "form") {
+          const start = $("#startDate");
+          if (!start.value) {
+            const d = new Date();
+            d.setDate(d.getDate() + 14);
+            start.value = d.toISOString().slice(0, 10);
+          }
+        }
+
+        const heading = $(`[data-panel="${panel}"] [tabindex="-1"]`);
+        if (heading) {
+          requestAnimationFrame(() => {
+            heading.focus({ preventScroll: true });
+            heading.scrollIntoView({ block: "nearest", behavior: "smooth" });
+          });
+        }
+      }
+
+      function pickQ1(opt) {
+        state.q1 = opt;
+        const branch = Q2_BY_BRANCH[opt.v];
+        $("#q2-heading").textContent = branch.heading;
+        renderOptions("q2-options", branch.options, pickQ2);
+        goTo("q2");
+      }
+
+      function pickQ2(opt) {
+        state.q2 = opt;
+        goTo("q3");
+      }
+
+      function pickQ3(opt) {
+        state.q3 = opt;
+        goTo("results");
+        computeAssessment();
+      }
+
+      /* ========== Assessment ========== */
+      function computeAssessment() {
+        const q2pts = state.q2?.pts ?? 2;
+        const q3pts = state.q3?.pts ?? 2;
+        const priority = Math.round(((q2pts + q3pts) / 8) * 100);
+        state.priority = priority;
+
+        let tier;
+        if (priority >= 75) {
+          tier = {
+            title: "High — Immediate placement",
+            desc: "Your answers indicate an active staffing shortage with near-term deadlines. Holloway Connect can prioritize coach sourcing, screening, and placement — or draft a short-term staffing contract.",
+            path: "Placement or contract call",
+          };
+        } else if (priority >= 50) {
+          tier = {
+            title: "Elevated — Active pipeline",
+            desc: "You have a clear capacity gap worth addressing this cycle. We recommend building a candidate shortlist and aligning on roles, coverage hours, and start windows.",
+            path: "Pipeline & scope meeting",
+          };
+        } else {
+          tier = {
+            title: "Planning — Strategic bench",
+            desc: "You’re in a planning posture. That’s the right time to establish a coaching bench and standby roster before vacancies disrupt programming.",
+            path: "Capacity planning consult",
+          };
+        }
+
+        state.tierTitle = tier.title;
+        state.tierDesc = tier.desc;
+        state.recommendedPath = tier.path;
+
+        $("#tierTitle").textContent = tier.title;
+        $("#tierDesc").textContent = tier.desc;
+        $("#metaNeed").textContent = state.q2?.label || "—";
+        $("#metaPath").textContent = tier.path;
+
+        const bar = $("#priorityBar");
+        const fill = $("#meterFill");
+        fill.style.width = "0%";
+        bar.setAttribute("aria-valuenow", "0");
+
+        requestAnimationFrame(() => {
+          fill.style.width = `${priority}%`;
+          bar.setAttribute("aria-valuenow", String(priority));
+        });
+      }
+
+      /* ========== Lead form ========== */
+      async function submitForm(e) {
+        e.preventDefault();
+        const btn = $("#submitBtn");
+        const errEl = $("#formError");
+        errEl.textContent = "";
+
+        const form = $("#leadForm");
+        if (!form.checkValidity()) {
+          form.reportValidity();
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = "Submitting…";
+
+        const payload = {
+          orgTypeLabel: state.q1?.label || "",
+          orgName: $("#orgName").value.trim(),
+          contactName: $("#contactName").value.trim(),
+          role: $("#role").value.trim(),
+          email: $("#email").value.trim(),
+          phone: $("#phone").value.trim(),
+          city: $("#city").value.trim(),
+          coachesNeeded: Number($("#coachesNeeded").value),
+          sportsPrograms: $("#sportsPrograms").value.trim(),
+          startDate: $("#startDate").value,
+          q2Label: state.q2?.label || "",
+          q3Label: state.q3?.label || "",
+          priority: state.priority || 0,
+          tierTitle: state.tierTitle || "",
+          recommendedPath: state.recommendedPath || "",
+        };
+
+        try {
+          const ok = await saveLead(payload);
+          btn.disabled = false;
+          btn.textContent = "Submit staffing request";
+
+          if (ok) {
+            form.reset();
+            goTo("thankyou");
+          } else {
+            errEl.textContent = "Something went wrong saving your request. Please try again.";
+          }
+        } catch (err) {
+          btn.disabled = false;
+          btn.textContent = "Submit staffing request";
+          errEl.textContent = err.message || "Something went wrong. Please try again.";
+        }
+      }
+
+      /* ========== Admin / CRM ========== */
+      async function checkPin() {
+        const val = $("#pinInput").value.trim();
+        $("#pinError").textContent = "";
+        try {
+          const res = await apiFetch("/admin/verify", {
+            method: "POST",
+            body: JSON.stringify({ pin: val }),
+          });
+          adminToken = res.token;
+          sessionStorage.setItem("hc_admin_token", adminToken);
+          goTo("admin");
+        } catch (err) {
+          if (isApiUnavailable(err) && val === ADMIN_CODE) {
+            adminToken = "local-admin";
+            sessionStorage.setItem("hc_admin_token", adminToken);
+            goTo("admin");
+            return;
+          }
+          $("#pinError").textContent = "Incorrect code.";
+          $("#pinInput").select();
+        }
+      }
+
+      function setFilter(filter) {
+        state.filter = filter;
+        $$(".filter-chip").forEach((chip) => {
+          chip.classList.toggle("is-active", chip.dataset.filter === filter);
+        });
+        renderCrm();
+      }
+
+      function statusSelectHtml(lead) {
+        const options = Object.values(STATUS)
+          .map(
+            (s) =>
+              `<option value="${s.id}" ${lead.status === s.id ? "selected" : ""}>${escapeHtml(s.label)}</option>`
+          )
+          .join("");
+        return `<label class="sr-only" for="status-${escapeAttr(lead.id)}">Status for ${escapeAttr(lead.orgName)}</label>
+          <select class="status-select" id="status-${escapeAttr(lead.id)}" data-lead-id="${escapeAttr(lead.id)}">${options}</select>`;
+      }
+
+      async function renderCrm() {
+        const listEl = $("#adminList");
+        const countEl = $("#adminCount");
+        listEl.innerHTML = `<p class="loading-state">Loading leads…</p>`;
+
+        let leads = [];
+        try {
+          leads = await loadLeads();
+        } catch (err) {
+          listEl.innerHTML = `<p class="empty-state">Could not load leads: ${escapeHtml(err.message)}</p>`;
+          return;
+        }
+
+        leads = leads.map((l) => ({
+          ...l,
+          status: STATUS[l.status] ? l.status : "new",
+        }));
+        lastLeads = leads;
+
+        const filtered =
+          state.filter === "all" ? leads : leads.filter((l) => l.status === state.filter);
+
+        countEl.textContent =
+          `${filtered.length} shown` +
+          (state.filter !== "all" ? ` · ${leads.length} total` : leads.length === 1 ? " · 1 lead" : ` · ${leads.length} leads`);
+
+        if (leads.length === 0) {
+          listEl.innerHTML = `<p class="empty-state">No staffing requests yet. Submissions from the public form will appear here.</p>`;
+          return;
+        }
+
+        if (filtered.length === 0) {
+          listEl.innerHTML = `<p class="empty-state">No leads with this status.</p>`;
+          return;
+        }
+
+        listEl.innerHTML = filtered
+          .map((c) => {
+            const st = STATUS[c.status] || STATUS.new;
+            return `
+              <article class="lead">
+                <div class="lead-top">
+                  <h3 class="lead-org">${escapeHtml(c.orgName || "Unnamed organization")}</h3>
+                  <span class="status-badge ${st.className}">${escapeHtml(st.label)}</span>
+                </div>
+                <span class="lead-tag">${escapeHtml(c.orgTypeLabel || "—")}</span>
+                <div class="lead-rows">
+                  <div>${escapeHtml(c.contactName || "—")} · ${escapeHtml(c.role || "—")}</div>
+                  <div><a href="mailto:${escapeAttr(c.email)}">${escapeHtml(c.email || "—")}</a> · <a href="tel:${escapeAttr(c.phone)}">${escapeHtml(c.phone || "—")}</a></div>
+                  <div>${escapeHtml(c.city || "—")}</div>
+                  <div><strong>${escapeHtml(String(c.coachesNeeded ?? "—"))}</strong> coach(es) · Start ${escapeHtml(formatShortDate(c.startDate))}</div>
+                  <div>${escapeHtml(c.sportsPrograms || "")}</div>
+                  <div>Need: ${escapeHtml(c.q2Label || "—")} · Timeline: ${escapeHtml(c.q3Label || "—")}</div>
+                  <div>Priority: ${escapeHtml(c.tierTitle || "—")} (${c.priority ?? "—"})</div>
+                </div>
+                <div class="lead-footer">
+                  <span class="lead-meta">${escapeHtml(formatDate(c.submittedAt))}</span>
+                  ${statusSelectHtml(c)}
+                </div>
+              </article>`;
+          })
+          .join("");
+
+        $$(".status-select", listEl).forEach((sel) => {
+          sel.addEventListener("change", async () => {
+            try {
+              await updateLeadStatus(sel.dataset.leadId, sel.value);
+              renderCrm();
+            } catch (err) {
+              alert(err.message || "Could not update status.");
+            }
+          });
+        });
+      }
+
+      function toCSV(leads) {
+        const headers = [
+          "Submitted",
+          "Status",
+          "Organization",
+          "Org Type",
+          "Contact Name",
+          "Role",
+          "Email",
+          "Phone",
+          "City",
+          "Coaches Needed",
+          "Sports / Programs",
+          "Preferred Start",
+          "Primary Need",
+          "Timeline",
+          "Priority Level",
+          "Priority Index",
+        ];
+        const rows = leads.map((c) => [
+          formatDate(c.submittedAt),
+          STATUS[c.status]?.label || c.status,
+          c.orgName,
+          c.orgTypeLabel,
+          c.contactName,
+          c.role,
+          c.email,
+          c.phone,
+          c.city,
+          c.coachesNeeded,
+          c.sportsPrograms,
+          c.startDate,
+          c.q2Label,
+          c.q3Label,
+          c.tierTitle,
+          c.priority,
+        ]);
+        const esc = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+        return [headers, ...rows].map((r) => r.map(esc).join(",")).join("\n");
+      }
+
+      async function copyCSV() {
+        const csv = toCSV(lastLeads);
+        try {
+          await navigator.clipboard.writeText(csv);
+          alert("CSV copied to clipboard.");
+        } catch {
+          console.log(csv);
+          alert("Could not copy automatically. CSV has been logged to the browser console.");
+        }
+      }
+
+      /* ========== Events ========== */
+      document.addEventListener("click", (e) => {
+        const go = e.target.closest("[data-go]");
+        if (go) {
+          e.preventDefault();
+          goTo(go.dataset.go);
+        }
+        const filter = e.target.closest("[data-filter]");
+        if (filter) {
+          e.preventDefault();
+          setFilter(filter.dataset.filter);
+        }
+      });
+
+      $("#leadForm").addEventListener("submit", submitForm);
+      $("#unlockBtn").addEventListener("click", checkPin);
+      $("#pinInput").addEventListener("keydown", (e) => {
+        if (e.key === "Enter") {
+          e.preventDefault();
+          checkPin();
+        }
+      });
+      $("#refreshCrm").addEventListener("click", renderCrm);
+      $("#copyCsv").addEventListener("click", copyCSV);
+
+      /* ========== Init ========== */
+      renderOptions("q1-options", Q1_OPTIONS, pickQ1);
+      setProgress(0);
+    })();
+  </script>
+</body>
+</html>
