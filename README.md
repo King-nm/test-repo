@@ -26,4 +26,12 @@ In GitHub, use:
 
 ## Data Collection
 
-The current fallback CRM stores leads in browser `localStorage`. For live collection across visitors, connect the form to a shared backend such as Supabase, Netlify Forms, Airtable, or a small API service.
+On static hosting, submissions are sent through FormSubmit to:
+
+```text
+Kingholloway01@gmail.com
+```
+
+The first live submission may send an activation email from FormSubmit. Confirm it once, then new leads should arrive by email.
+
+The browser CRM still keeps a local `localStorage` copy for the current browser. For a shared admin dashboard across devices, add a database backend such as Supabase.

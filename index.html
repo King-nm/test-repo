@@ -886,7 +886,7 @@
               </div>
               <p class="form-error" id="formError" role="alert" aria-live="assertive"></p>
               <button class="btn btn-accent" type="submit" id="submitBtn">Submit staffing request</button>
-              <p class="fine-print">Submissions are saved to the Holloway Connect server and can trigger email alerts when SMTP is configured.</p>
+              <p class="fine-print">Submissions are emailed to Holloway Connect and saved locally for this browser's CRM view.</p>
             </form>
           </section>
 
@@ -954,6 +954,7 @@
       /* ========== Config & state ========== */
       const STORAGE_KEY = "holloway-connect-leads-v2";
       const ADMIN_CODE = "0222";
+      const LEAD_EMAIL_ENDPOINT = "https://formsubmit.co/ajax/Kingholloway01@gmail.com";
       const STATUS = {
         new: { id: "new", label: "New Lead", className: "status-new" },
         contacted: { id: "contacted", label: "Contacted", className: "status-contacted" },
@@ -1128,6 +1129,57 @@
         return `lead-${Date.now()}-${Math.random().toString(16).slice(2)}`;
       }
 
+      function saveLocalLead(payload) {
+        const leads = readLocalLeads();
+        leads.unshift({
+          id: createLeadId(),
+          status: "new",
+          submittedAt: new Date().toISOString(),
+          ...payload,
+        });
+        writeLocalLeads(leads);
+      }
+
+      async function emailLead(payload) {
+        const res = await fetch(LEAD_EMAIL_ENDPOINT, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({
+            _subject: `New Holloway Connect lead: ${payload.orgName || "Staffing request"}`,
+            _template: "table",
+            _captcha: "false",
+            organization: payload.orgName,
+            organization_type: payload.orgTypeLabel,
+            contact_name: payload.contactName,
+            role: payload.role,
+            email: payload.email,
+            phone: payload.phone,
+            city: payload.city,
+            coaches_needed: payload.coachesNeeded,
+            sports_programs: payload.sportsPrograms,
+            preferred_start: payload.startDate,
+            primary_need: payload.q2Label,
+            timeline: payload.q3Label,
+            priority_level: payload.tierTitle,
+            priority_index: payload.priority,
+            recommended_path: payload.recommendedPath,
+          }),
+        });
+
+        if (!res.ok) {
+          let message = "Could not email the lead.";
+          try {
+            const body = await res.json();
+            message = body.message || message;
+          } catch { /* ignore */ }
+          throw new Error(message);
+        }
+        return true;
+      }
+
       async function loadLeads() {
         if (!adminToken) return [];
         try {
@@ -1147,14 +1199,8 @@
           return !!data?.ok;
         } catch (err) {
           if (!isApiUnavailable(err)) throw err;
-          const leads = readLocalLeads();
-          leads.unshift({
-            id: createLeadId(),
-            status: "new",
-            submittedAt: new Date().toISOString(),
-            ...payload,
-          });
-          writeLocalLeads(leads);
+          await emailLead(payload);
+          saveLocalLead(payload);
           return true;
         }
       }
